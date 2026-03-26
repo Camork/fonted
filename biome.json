@@ -1,6 +1,10 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"files": {
-		"ignore": ["out/"]
+		"includes": [
+			"src/**",
+			"bundle.mjs",
+			"biome.json"
+		]
 	}
 }

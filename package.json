@@ -1,17 +1,24 @@
 {
-	"name": "fonted",
-	"displayName": "fonted",
+	"name": "fonted-plus",
+	"displayName": "Fonted Plus",
 	"description": "Change UI font for vscode. Just that.",
-	"version": "1.2.0",
-	"publisher": "degreat",
+	"version": "2.0.0",
+	"publisher": "camork",
 	"icon": "assets/fonted.png",
-	"repository": "https://github.com/blackmann/fonted.git",
+	"repository": "https://github.com/camork/fonted.git",
 	"engines": {
 		"vscode": "^1.95.0"
 	},
-	"categories": ["Other"],
-	"activationEvents": ["onCommand:fonted.helloWorld", "onStartupFinished"],
-	"extensionKind": ["ui"],
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:fonted.helloWorld",
+		"onStartupFinished"
+	],
+	"extensionKind": [
+		"ui"
+	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
@@ -40,29 +47,30 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "yarn run compile",
+		"vscode:prepublish": "pnpm run compile",
 		"compile": "node ./bundle.mjs",
 		"watch": "tsc -watch -p ./",
-		"pretest": "yarn run compile && yarn run lint",
+		"pretest": "pnpm run compile && pnpm run lint",
 		"lint": "biome check",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"package": "npx @vscode/vsce package"
 	},
 	"devDependencies": {
-		"@types/glob": "^8.0.0",
-		"@types/jsdom": "^20.0.1",
-		"@types/mocha": "^10.0.1",
-		"@types/node": "16.x",
-		"@types/vscode": "^1.74.0",
-		"@typescript-eslint/eslint-plugin": "^5.45.0",
-		"@typescript-eslint/parser": "^5.45.0",
-		"@vscode/test-electron": "^2.2.0",
-		"esbuild": "^0.16.8",
-		"eslint": "^8.28.0",
-		"glob": "^8.0.3",
-		"mocha": "^10.1.0",
-		"typescript": "^4.9.3"
+		"@types/glob": "^9.0.0",
+		"@types/jsdom": "^28.0.1",
+		"@types/mocha": "^10.0.10",
+		"@types/node": "^25.5.0",
+		"@types/vscode": "^1.95.0",
+		"@typescript-eslint/eslint-plugin": "^8.57.2",
+		"@typescript-eslint/parser": "^8.57.2",
+		"@vscode/test-electron": "^2.5.2",
+		"esbuild": "^0.27.4",
+		"eslint": "^10.1.0",
+		"glob": "^13.0.6",
+		"mocha": "^11.7.5",
+		"typescript": "^5.9.3"
 	},
 	"dependencies": {
-		"@biomejs/biome": "^1.9.3"
+		"@biomejs/biome": "^2.4.9"
 	}
 }
