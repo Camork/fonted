@@ -2,7 +2,7 @@
 	"name": "fonted-plus",
 	"displayName": "Fonted Plus",
 	"description": "Change UI font for vscode. Just that.",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"publisher": "camork",
 	"icon": "assets/fonted.png",
 	"repository": "https://github.com/camork/fonted.git",
@@ -42,7 +42,12 @@
 				"fonted.fontStretch": {
 					"type": "string",
 					"description": "font-stretch value"
-				}
+				},
+                "fonted.autoFix": {
+                    "type": "boolean",
+                    "description": "Fix checksums automatically when VSCode start up",
+                    "default": false
+                }
 			}
 		}
 	},
@@ -51,9 +56,8 @@
 		"compile": "node ./bundle.mjs",
 		"watch": "tsc -watch -p ./",
 		"pretest": "pnpm run compile && pnpm run lint",
-		"lint": "biome check",
 		"test": "node ./out/test/runTest.js",
-		"package": "npx @vscode/vsce package"
+		"package": "npx @vscode/vsce package --no-dependencies"
 	},
 	"devDependencies": {
 		"@types/glob": "^9.0.0",
@@ -71,6 +75,7 @@
 		"typescript": "^5.9.3"
 	},
 	"dependencies": {
-		"@biomejs/biome": "^2.4.9"
+        "sudo-prompt": "^9.2.1",
+        "tmp": "^0.2.3"
 	}
 }
