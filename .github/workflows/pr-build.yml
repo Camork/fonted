@@ -1,0 +1,41 @@
+name: PR Build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-vsix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Compile extension
+        run: pnpm run compile
+
+      - name: Build VSIX package
+        run: pnpm run package
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fonted-vsix
+          path: "*.vsix"
+          if-no-files-found: error

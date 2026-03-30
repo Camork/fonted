@@ -2,7 +2,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as vscode from "vscode";
-import { syncChecksums } from "./checksums";
+import { apply, cleanupOrigFiles, restore } from "./checksums";
 
 const STYLE_ID_TAG = '<style id="fonted">';
 const WORKBENCH_RELATIVE_PATHS = [
@@ -14,6 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
   const enable = vscode.commands.registerCommand("fonted.enable", async () => {
     try {
       await setFont(context);
+      await apply();
     } catch (error) {
       showError("enable Fonted", error);
     }
@@ -26,6 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       try {
         await unsetFont();
+        await restore();
       } catch (error) {
         showError("disable Fonted", error);
       }
@@ -33,6 +35,15 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(disable);
+
+  cleanupOrigFiles();
+
+  const shouldAutoFix = vscode.workspace
+    .getConfiguration()
+    .get("fonted.autoFix");
+  if (shouldAutoFix) {
+    void apply();
+  }
 }
 
 export function deactivate() {}
@@ -114,7 +125,6 @@ async function unsetFont() {
 function save(html: string) {
   const workbenchInfo = getWorkbenchInfo();
   fs.writeFileSync(workbenchInfo.absolutePath, html);
-  syncChecksums(getAppRoot(), [workbenchInfo.relativePath]);
 }
 
 function getConfig(name: string) {
