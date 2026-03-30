@@ -53,7 +53,7 @@
 		"pretest": "pnpm run compile && pnpm run lint",
 		"lint": "biome check",
 		"test": "node ./out/test/runTest.js",
-		"package": "node ./scripts/package-vsix.mjs"
+		"package": "npx @vscode/vsce package"
 	},
 	"devDependencies": {
 		"@types/glob": "^9.0.0",
